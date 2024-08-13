@@ -2,13 +2,14 @@ package com.diev.blog.service;
 
 import com.diev.blog.domain.DiaTwoBlog;
 import com.diev.blog.domain.DiaTwoBlogRepository;
+
 import com.diev.blog.dto.BlogDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class DiaTwoServiceImpl implements DiaTwoService {
@@ -19,8 +20,10 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     // Create
     @Transactional
     @Override
-    public DiaTwoBlog saveDiaTwoBlog(DiaTwoBlog request) {
-        return diaTwoBlogRepository.save(request);
+    public DiaTwoBlog saveDiaTwoBlog(String title, String content, byte[] img) {
+        DiaTwoBlog blog = new DiaTwoBlog(title, content, img);
+
+        return diaTwoBlogRepository.save(blog);
     }
 
     // Read - All
@@ -38,12 +41,13 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     // Update
     @Transactional
     @Override
-    public DiaTwoBlog updateDiaTwoBlog(long id, BlogDto request) {
+    public DiaTwoBlog updateDiaTwoBlog(long id, BlogDto blogDto) throws IOException {
         DiaTwoBlog diaTwoBlog = diaTwoBlogRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다!")
         );
 
-        diaTwoBlog.update(request);
+        byte[] imgChange = blogDto.getImg().getBytes();
+        diaTwoBlog.update(blogDto.getTitle(), blogDto.getContent(), imgChange);
         return diaTwoBlog;
     }
 

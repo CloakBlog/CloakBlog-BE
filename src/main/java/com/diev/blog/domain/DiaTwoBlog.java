@@ -6,9 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Getter
@@ -38,15 +37,15 @@ public class DiaTwoBlog {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public DiaTwoBlog(BlogDto request) {
-        this.title = request.getTitle();
-        this.context = request.getContext();
-        this.img = request.getImg();
+    public DiaTwoBlog(String title, String content, byte[] img) {
+        this.title = title;
+        this.context = content;
+        this.img = img;
     }
 
-    public void update(BlogDto request) {
-        this.title = request.getTitle();
-        this.context = request.getContext();
-        this.img = request.getImg();
+    public void update(String title, String content, byte[] img) {
+        this.title = title;
+        this.context = content;
+        this.img = img;
     }
 }
