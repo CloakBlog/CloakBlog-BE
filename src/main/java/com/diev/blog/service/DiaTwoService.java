@@ -15,11 +15,15 @@ public interface DiaTwoService {
     // Read - All
     List<DiaTwoBlog> getAllDiaTwoBlog();
 
+    // Read - Detail
+    DiaTwoBlog getById(Long id);
+
     // Update
     @Transactional
-    DiaTwoBlog updateDiaTwoBlog(Long id, BlogDto request);
+    DiaTwoBlog updateDiaTwoBlog(long id, BlogDto request);
 
     // Delete
     @Transactional
     void delete(long id);
+
 }

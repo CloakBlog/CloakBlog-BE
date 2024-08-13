@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DiaTwoBlogRepository extends JpaRepository<DiaTwoBlog, Long> {
-    //
+    public DiaTwoBlog getById(long id);
 }

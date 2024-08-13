@@ -29,10 +29,16 @@ public class DiaTwoServiceImpl implements DiaTwoService {
         return diaTwoBlogRepository.findAll().stream().toList();
     }
 
+    // Read - Detail
+    @Override
+    public DiaTwoBlog getById(Long id) {
+        return diaTwoBlogRepository.getById(id);
+    }
+
     // Update
     @Transactional
     @Override
-    public DiaTwoBlog updateDiaTwoBlog(Long id, BlogDto request) {
+    public DiaTwoBlog updateDiaTwoBlog(long id, BlogDto request) {
         DiaTwoBlog diaTwoBlog = diaTwoBlogRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다!")
         );

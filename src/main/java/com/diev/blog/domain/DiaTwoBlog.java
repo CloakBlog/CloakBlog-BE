@@ -42,13 +42,11 @@ public class DiaTwoBlog {
         this.title = request.getTitle();
         this.context = request.getContext();
         this.img = request.getImg();
-        this.createdAt = LocalDateTime.now();
     }
 
     public void update(BlogDto request) {
         this.title = request.getTitle();
         this.context = request.getContext();
         this.img = request.getImg();
-        this.updatedAt = LocalDateTime.now();
     }
 }

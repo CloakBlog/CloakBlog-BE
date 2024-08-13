@@ -5,11 +5,13 @@ import com.diev.blog.dto.BlogDto;
 import com.diev.blog.service.DiaTwoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/diatwo")
 public class DiaTwoController {
 
@@ -21,13 +23,17 @@ public class DiaTwoController {
     }
 
     @GetMapping("/")
-    public String diaHome() {
+    public String diaHome(Model model) {
+        model.addAttribute("posts", diaTwoService.getAllDiaTwoBlog());
         return "dia-two/home";
     }
 
-    @GetMapping("/posts")
-    public List<DiaTwoBlog> getAllBlogs() {
-        return diaTwoService.getAllDiaTwoBlog();
+    @GetMapping("/post/{id}")
+    public String getAllBlogs(@PathVariable("id") Long id, Model model) {
+        DiaTwoBlog diaTwoBlog = diaTwoService.getById(id);
+        model.addAttribute("post", diaTwoBlog);
+        return "dia-two/post_detail";
+
     }
 
     @PostMapping("/post")
