@@ -56,4 +56,5 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     public void delete(long id) {
         diaTwoBlogRepository.deleteById(id);
     }
+
 }
