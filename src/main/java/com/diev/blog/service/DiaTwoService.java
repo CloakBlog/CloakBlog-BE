@@ -12,7 +12,7 @@ public interface DiaTwoService {
 
     // Create
     @Transactional
-    DiaTwoBlog saveDiaTwoBlog(String title, String content, byte[] img);
+    DiaTwoBlog saveDiaTwoBlog(String title, String content, String img);
 
     // Read - All
     List<DiaTwoBlog> getAllDiaTwoBlog();

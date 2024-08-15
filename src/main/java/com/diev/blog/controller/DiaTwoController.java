@@ -5,6 +5,11 @@ import com.diev.blog.dto.BlogDto;
 import com.diev.blog.service.DiaTwoService;
 import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 //@RestController
 @Controller
@@ -49,14 +57,9 @@ public class DiaTwoController {
     @PostMapping("/post")
     public String diaBlogSave(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("img") MultipartFile multipartFile) throws IOException {
         String absolutePath = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads";
-
         String uploadFileName = multipartFile.getOriginalFilename();
-        System.out.println(uploadFileName);
         // 저장할 파일, 생성자로 경로와 이름을 지정해줌.
         File saveFile = new File(absolutePath, uploadFileName);
-
-        // byte
-        byte[] imgChange = uploadFileName.getBytes();
         try {
             // void transferTo(File dest) throws IOException 업로드한 파일 데이터를 지정한 파일에 저장
             multipartFile.transferTo(saveFile);
@@ -64,7 +67,7 @@ public class DiaTwoController {
             e.printStackTrace();
         }
 
-        DiaTwoBlog diaTwoBlog = diaTwoService.saveDiaTwoBlog(title, content, imgChange);
+        DiaTwoBlog diaTwoBlog = diaTwoService.saveDiaTwoBlog(title, content, uploadFileName);
         return "redirect:/diatwo/post/" + diaTwoBlog.getId();
     }
 
@@ -80,4 +83,21 @@ public class DiaTwoController {
         return "Delete Successfully!";
     }
 
+    @GetMapping("/img")
+    public ResponseEntity<Resource> display(@RequestParam("filename") String filename) {
+        String path = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads/";
+        Resource resource = new FileSystemResource(path + filename);
+        if (!resource.exists()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        HttpHeaders header = new HttpHeaders();
+        Path filePath = null;
+        try{
+            filePath = Paths.get(path + filename);
+            header.add("Content-type", Files.probeContentType(filePath));
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(resource, header, HttpStatus.OK);
+    }
 }

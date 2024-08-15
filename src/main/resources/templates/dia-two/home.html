@@ -45,7 +45,7 @@
 
             <!-- Nested row for non-featured blog posts-->
             <div th:each="post : ${posts}" class="card mb-4">
-                <a th:href="@{/diatwo/post/{id}(id=${post.id})}"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                <a th:href="@{/diatwo/post/{id}(id=${post.id})}"><img class="img-fluid rounded" th:src="@{/diatwo/img(filename=${post.img})}" alt="..." /></a>
                 <div class="card-body">
                     <div class="small text-muted" th:text="${post.createdAt}"></div>
                     <h2 class="card-title" th:text="${post.title}"></h2>

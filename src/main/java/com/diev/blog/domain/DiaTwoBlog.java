@@ -27,7 +27,7 @@ public class DiaTwoBlog {
     private String context;
 
     @Column(name="img", nullable = true)
-    private byte[] img;
+    private String img;
 
     @Column(name="created_at")
     @CreationTimestamp
@@ -37,13 +37,13 @@ public class DiaTwoBlog {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public DiaTwoBlog(String title, String content, byte[] img) {
+    public DiaTwoBlog(String title, String content, String img) {
         this.title = title;
         this.context = content;
         this.img = img;
     }
 
-    public void update(String title, String content, byte[] img) {
+    public void update(String title, String content, String img) {
         this.title = title;
         this.context = content;
         this.img = img;

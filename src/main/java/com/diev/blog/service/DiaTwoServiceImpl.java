@@ -20,7 +20,7 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     // Create
     @Transactional
     @Override
-    public DiaTwoBlog saveDiaTwoBlog(String title, String content, byte[] img) {
+    public DiaTwoBlog saveDiaTwoBlog(String title, String content, String img) {
         DiaTwoBlog blog = new DiaTwoBlog(title, content, img);
 
         return diaTwoBlogRepository.save(blog);
@@ -46,8 +46,7 @@ public class DiaTwoServiceImpl implements DiaTwoService {
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다!")
         );
 
-        byte[] imgChange = blogDto.getImg().getBytes();
-        diaTwoBlog.update(blogDto.getTitle(), blogDto.getContent(), imgChange);
+        diaTwoBlog.update(blogDto.getTitle(), blogDto.getContent(), String.valueOf(blogDto.getImg()));
         return diaTwoBlog;
     }
 

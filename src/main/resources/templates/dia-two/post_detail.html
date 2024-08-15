@@ -39,12 +39,14 @@
           <!-- Post title-->
           <h1 class="fw-bolder mb-1" th:text="${post.title}"></h1>
           <!-- Post meta content-->
-          <div class="text-muted fst-italic mb-2" th:text="'Posted on ' + ${post.createdAt} + ' by ' + ${post.updatedAt}"></div>
+          <div class="text-muted fst-italic mb-2" th:text="'Posted on ' + ${post.createdAt} + ' by DIABLO ADMIN'"></div>
           <!-- Post categories-->
 <!--          <a class="badge bg-secondary text-decoration-none link-light" href="#!" th:each="category : ${post.categories}" th:text="${category}">Web Design</a>-->
         </header>
         <!-- Preview image figure-->
-        <figure class="mb-4"><img class="img-fluid rounded" th:src="${post.img}" alt="..." /></figure>
+        <figure class="mb-4">
+          <img class="img-fluid rounded" th:src="@{/diatwo/img(filename=${post.img})}" alt="..." />
+        </figure>
         <!-- Post content-->
         <section class="mb-5">
           <p class="fs-5 mb-4" th:text="${post.context}"></p>
