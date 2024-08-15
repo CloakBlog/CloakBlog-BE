@@ -20,8 +20,8 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     // Create
     @Transactional
     @Override
-    public DiaTwoBlog saveDiaTwoBlog(String title, String content, String img, String forderPath) {
-        DiaTwoBlog blog = new DiaTwoBlog(title, content, img, forderPath);
+    public DiaTwoBlog saveDiaTwoBlog(String title, String content, String img, String folderPath) {
+        DiaTwoBlog blog = new DiaTwoBlog(title, content, img, folderPath);
 
         return diaTwoBlogRepository.save(blog);
     }

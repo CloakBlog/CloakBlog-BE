@@ -15,8 +15,7 @@ public class FileUtils {
     }
 
     public static String generateFolderPathByAppAndDate(String basePath, String appName) {
-        LocalDate today = LocalDate.now();
-        String folderPath = basePath + "/" + appName + "/" + today.getYear() + "/" + today.getMonthValue() + "/";
+        String folderPath = basePath + "/" + appName + "/";
         File folder = new File(folderPath);
         if (!folder.exists()) {
             folder.mkdirs();

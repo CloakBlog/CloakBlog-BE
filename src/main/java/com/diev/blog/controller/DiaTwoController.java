@@ -64,7 +64,8 @@ public class DiaTwoController {
         // 폴더 경로 생성 및 유니크 파일명 생성
         String folderPath = FileUtils.generateFolderPathByAppAndDate(basePath, appName);
         String uniqueFileName = FileUtils.generateUniqueFileName(multipartFile.getOriginalFilename());
-        File saveFile = new File(folderPath, uniqueFileName);
+        String fullPath = folderPath + uniqueFileName;
+        File saveFile = new File(fullPath);
 
         // 이미지 압축 및 저장
         FileUtils.saveCompressedImage(multipartFile, saveFile.getAbsolutePath());
@@ -93,15 +94,18 @@ public class DiaTwoController {
 
     @GetMapping("/img")
     public ResponseEntity<Resource> display(@RequestParam("filename") String filename) {
-        String path = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads/";
-        Resource resource = new FileSystemResource(path + filename);
+        String path = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads";
+        String appName = "/Dia-Two/";
+        String fullPath = path + appName + filename;
+        Resource resource = new FileSystemResource(fullPath);
+
         if (!resource.exists()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         HttpHeaders header = new HttpHeaders();
         Path filePath = null;
         try{
-            filePath = Paths.get(path + filename);
+            filePath = Paths.get(fullPath);
             header.add("Content-type", Files.probeContentType(filePath));
         }catch(IOException e) {
             e.printStackTrace();
