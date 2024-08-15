@@ -23,11 +23,14 @@ public class DiaTwoBlog {
     @Column(name="title", nullable = false, length = 20)
     private String title;
 
-    @Column(name="context", nullable = true)
+    @Column(name="context")
     private String context;
 
-    @Column(name="img", nullable = true)
+    @Column(name="img")
     private String img;
+
+    @Column(name="folderPath")
+    private String folderPath;
 
     @Column(name="created_at")
     @CreationTimestamp
@@ -37,15 +40,17 @@ public class DiaTwoBlog {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public DiaTwoBlog(String title, String content, String img) {
+    public DiaTwoBlog(String title, String content, String img, String folderPath) {
         this.title = title;
         this.context = content;
         this.img = img;
+        this.folderPath = folderPath;
     }
 
-    public void update(String title, String content, String img) {
+    public void update(String title, String content, String img, String folderPath) {
         this.title = title;
         this.context = content;
         this.img = img;
+        this.folderPath = folderPath;
     }
 }

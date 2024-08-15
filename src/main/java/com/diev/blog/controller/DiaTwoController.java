@@ -21,6 +21,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.diev.blog.utils.FileUtils;
+
 //@RestController
 @Controller
 @RequestMapping("/diatwo")
@@ -56,10 +58,16 @@ public class DiaTwoController {
 
     @PostMapping("/post")
     public String diaBlogSave(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("img") MultipartFile multipartFile) throws IOException {
-        String absolutePath = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads";
-        String uploadFileName = multipartFile.getOriginalFilename();
-        // 저장할 파일, 생성자로 경로와 이름을 지정해줌.
-        File saveFile = new File(absolutePath, uploadFileName);
+        String basePath = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads";
+        String appName = "Dia-Two";
+
+        // 폴더 경로 생성 및 유니크 파일명 생성
+        String folderPath = FileUtils.generateFolderPathByAppAndDate(basePath, appName);
+        String uniqueFileName = FileUtils.generateUniqueFileName(multipartFile.getOriginalFilename());
+        File saveFile = new File(folderPath, uniqueFileName);
+
+        // 이미지 압축 및 저장
+        FileUtils.saveCompressedImage(multipartFile, saveFile.getAbsolutePath());
         try {
             // void transferTo(File dest) throws IOException 업로드한 파일 데이터를 지정한 파일에 저장
             multipartFile.transferTo(saveFile);
@@ -67,7 +75,7 @@ public class DiaTwoController {
             e.printStackTrace();
         }
 
-        DiaTwoBlog diaTwoBlog = diaTwoService.saveDiaTwoBlog(title, content, uploadFileName);
+        DiaTwoBlog diaTwoBlog = diaTwoService.saveDiaTwoBlog(title, content, uniqueFileName, folderPath);
         return "redirect:/diatwo/post/" + diaTwoBlog.getId();
     }
 
