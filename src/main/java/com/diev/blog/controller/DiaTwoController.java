@@ -7,6 +7,7 @@ import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,13 @@ public class DiaTwoController {
     }
 
     @GetMapping("/")
-    public String diaHome(Model model) {
-        model.addAttribute("posts", diaTwoService.getAllDiaTwoBlog());
+    public String diaHome(Model model,
+                          @RequestParam(value = "page", defaultValue = "0") int page,
+                          @RequestParam(value = "size", defaultValue = "5") int size) {
+        Page<DiaTwoBlog> blogPage = diaTwoService.getAllDiaTwoBlog(page, size);
+        model.addAttribute("posts", blogPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", blogPage.getTotalPages());
         return "/dia-two/home";
     }
 

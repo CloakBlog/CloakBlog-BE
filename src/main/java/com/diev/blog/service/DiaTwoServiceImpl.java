@@ -6,6 +6,9 @@ import com.diev.blog.domain.DiaTwoBlogRepository;
 import com.diev.blog.dto.BlogDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -28,8 +31,9 @@ public class DiaTwoServiceImpl implements DiaTwoService {
 
     // Read - All
     @Override
-    public List<DiaTwoBlog> getAllDiaTwoBlog() {
-        return diaTwoBlogRepository.findAll().stream().toList();
+    public Page<DiaTwoBlog> getAllDiaTwoBlog(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return diaTwoBlogRepository.findAll(pageable);
     }
 
     // Read - Detail

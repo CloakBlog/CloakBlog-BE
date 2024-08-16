@@ -57,13 +57,20 @@
             <nav aria-label="Pagination">
                 <hr class="my-0" />
                 <ul class="pagination justify-content-center my-4">
-                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                    <!-- 이전 페이지 -->
+                    <li th:classappend="${currentPage == 0} ? 'disabled'" class="page-item">
+                        <a th:href="@{/dia(page=${currentPage - 1})}" class="page-link" tabindex="-1" aria-disabled="true">Newer</a>
+                    </li>
+
+                    <!-- 페이지 번호 -->
+                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'" class="page-item">
+                        <a th:href="@{/dia(page=${i})}" class="page-link" th:text="${i + 1}"></a>
+                    </li>
+
+                    <!-- 다음 페이지 -->
+                    <li th:classappend="${currentPage + 1 == totalPages} ? 'disabled'" class="page-item">
+                        <a th:href="@{/dia(page=${currentPage + 1})}" class="page-link">Older</a>
+                    </li>
                 </ul>
             </nav>
         </div>
