@@ -1,5 +1,6 @@
 package com.diev.blog.controller;
 
+import com.diev.blog.domain.Categories;
 import com.diev.blog.domain.DiaTwoBlog;
 import com.diev.blog.dto.BlogDto;
 import com.diev.blog.service.DiaTwoService;
@@ -21,6 +22,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 import com.diev.blog.utils.FileUtils;
 
@@ -58,12 +62,27 @@ public class DiaTwoController {
     }
 
     @GetMapping("/post")
-    public String diaBlogWrite() {
+    public String diaBlogWrite(Model model) {
+        List<Categories> categories = diaTwoService.getAllCategories();
+        model.addAttribute("categories", categories);
         return "/dia-two/post_create";
     }
 
     @PostMapping("/post")
-    public String diaBlogSave(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("img") MultipartFile multipartFile) throws IOException {
+    public String diaBlogSave(
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("img") MultipartFile multipartFile,
+            @RequestParam("categoryIds") Set<Categories> categories) throws IOException {
+
+        // 파일이 비어 있는지 확인
+        if (multipartFile.isEmpty()) {
+            // 파일이 첨부되지 않은 경우의 처리
+            // 예를 들어, 기본 이미지를 설정하거나 파일 업로드 없이 저장할 수 있습니다.
+            DiaTwoBlog diaTwoBlog = diaTwoService.saveDiaTwoBlog(title, content, null, null, categories);
+            return "redirect:/diatwo/post/" + diaTwoBlog.getId();
+        }
+
         String basePath = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads";
         String appName = "Dia-Two";
 
@@ -82,7 +101,7 @@ public class DiaTwoController {
             e.printStackTrace();
         }
 
-        DiaTwoBlog diaTwoBlog = diaTwoService.saveDiaTwoBlog(title, content, uniqueFileName, folderPath);
+        DiaTwoBlog diaTwoBlog = diaTwoService.saveDiaTwoBlog(title, content, uniqueFileName, folderPath, categories);
         return "redirect:/diatwo/post/" + diaTwoBlog.getId();
     }
 

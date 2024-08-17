@@ -1,14 +1,13 @@
 package com.diev.blog.domain;
 
-import com.diev.blog.dto.BlogDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -32,6 +31,14 @@ public class DiaTwoBlog {
     @Column(name="folderPath")
     private String folderPath;
 
+    @ManyToMany
+    @JoinTable(
+            name = "blog_categories",
+            joinColumns = @JoinColumn(name = "blog_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Categories> categories;
+
     @Column(name="created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -40,17 +47,19 @@ public class DiaTwoBlog {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public DiaTwoBlog(String title, String content, String img, String folderPath) {
+    public DiaTwoBlog(String title, String content, String img, String folderPath, Set<Categories> categories) {
         this.title = title;
         this.context = content;
         this.img = img;
         this.folderPath = folderPath;
+        this.categories = categories;
     }
 
-    public void update(String title, String content, String img, String folderPath) {
+    public void update(String title, String content, String img, String folderPath, Set<Categories> categories) {
         this.title = title;
         this.context = content;
         this.img = img;
         this.folderPath = folderPath;
+        this.categories = categories;
     }
 }

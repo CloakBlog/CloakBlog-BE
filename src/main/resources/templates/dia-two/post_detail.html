@@ -45,7 +45,8 @@
         </header>
         <!-- Preview image figure-->
         <figure class="mb-4">
-          <img class="img-fluid rounded" th:src="@{/diatwo/img(filename=${post.img})}" alt="..." />
+          <img class="img-fluid rounded" th:src="${post.img != null and !post.img.isEmpty()} ? @{/uploads/${post.img}} : @{/images/default.png}"
+               alt="Blog Image" />
         </figure>
         <!-- Post content-->
         <section class="mb-5">

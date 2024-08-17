@@ -1,5 +1,7 @@
 package com.diev.blog.service;
 
+import com.diev.blog.domain.Categories;
+import com.diev.blog.domain.CategoriesRepository;
 import com.diev.blog.domain.DiaTwoBlog;
 import com.diev.blog.domain.DiaTwoBlogRepository;
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DiaTwoServiceImpl implements DiaTwoService {
@@ -20,11 +23,14 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     @Autowired
     DiaTwoBlogRepository diaTwoBlogRepository;
 
+    @Autowired
+    CategoriesRepository categoriesRepository;
+
     // Create
     @Transactional
     @Override
-    public DiaTwoBlog saveDiaTwoBlog(String title, String content, String img, String folderPath) {
-        DiaTwoBlog blog = new DiaTwoBlog(title, content, img, folderPath);
+    public DiaTwoBlog saveDiaTwoBlog(String title, String content, String img, String folderPath, Set<Categories> categories) {
+        DiaTwoBlog blog = new DiaTwoBlog(title, content, img, folderPath, categories);
 
         return diaTwoBlogRepository.save(blog);
     }
@@ -50,7 +56,7 @@ public class DiaTwoServiceImpl implements DiaTwoService {
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다!")
         );
 
-        diaTwoBlog.update(blogDto.getTitle(), blogDto.getContent(), String.valueOf(blogDto.getImg()), diaTwoBlog.getFolderPath());
+        diaTwoBlog.update(blogDto.getTitle(), blogDto.getContent(), String.valueOf(blogDto.getImg()), diaTwoBlog.getFolderPath(), diaTwoBlog.getCategories());
         return diaTwoBlog;
     }
 
@@ -58,6 +64,10 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     @Override
     public void delete(long id) {
         diaTwoBlogRepository.deleteById(id);
+    }
+
+    public List<Categories> getAllCategories() {
+        return categoriesRepository.findAll();
     }
 
 }
