@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -51,6 +52,16 @@ public class DiaTwoController {
         model.addAttribute("posts", blogPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", blogPage.getTotalPages());
+        return "/dia-two/home";
+    }
+
+    @GetMapping("/category/{name}")
+    public String getPostsByCategory(@PathVariable("name") String name, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
+        Pageable pageable = PageRequest.of(page, 10); // 페이지 크기는 10으로 설정
+        Page<DiaTwoBlog> postsPage = diaTwoService.findByCategoryName(name, pageable);
+
+        model.addAttribute("posts", postsPage);
+        model.addAttribute("category", name);
         return "/dia-two/home";
     }
 

@@ -5,9 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DiaTwoBlogRepository extends JpaRepository<DiaTwoBlog, Long> {
     Page<DiaTwoBlog> findAll(Pageable pageable);
 
-    public DiaTwoBlog getById(long id);
+    Page<DiaTwoBlog> findByCategoriesContains(Categories categories, Pageable pageable);
 }

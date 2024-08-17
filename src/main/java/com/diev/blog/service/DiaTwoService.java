@@ -6,6 +6,7 @@ import com.diev.blog.domain.DiaTwoBlog;
 import com.diev.blog.dto.BlogDto;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,4 +35,5 @@ public interface DiaTwoService {
     // Categories
     List<Categories> getAllCategories();
 
+    Page<DiaTwoBlog> findByCategoryName(String name, Pageable pageable);
 }

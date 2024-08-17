@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -66,8 +67,15 @@ public class DiaTwoServiceImpl implements DiaTwoService {
         diaTwoBlogRepository.deleteById(id);
     }
 
+    @Override
     public List<Categories> getAllCategories() {
         return categoriesRepository.findAll();
+    }
+
+    @Override
+    public Page<DiaTwoBlog> findByCategoryName(String categoryName, Pageable pageable) {
+        Categories category = categoriesRepository.findByName(categoryName);
+        return diaTwoBlogRepository.findByCategoriesContains(category, pageable);
     }
 
 }

@@ -16,13 +16,13 @@
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#!">DIABLO 2: Resurrected</a>
+        <a class="navbar-brand" href="/diatwo/">DIABLO 2: Resurrected</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/dia/">Blog</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/diatwo/">Blog</a></li>
             </ul>
         </div>
     </div>
@@ -61,18 +61,18 @@
                 <hr class="my-0" />
                 <ul class="pagination justify-content-center my-4">
                     <!-- 이전 페이지 -->
-                    <li th:classappend="${currentPage == 0} ? 'disabled'" class="page-item">
-                        <a th:href="@{/dia(page=${currentPage - 1})}" class="page-link" tabindex="-1" aria-disabled="true">Newer</a>
+                    <li th:classappend="${currentPage == null || currentPage == 0} ? 'disabled'" class="page-item">
+                        <a th:href="@{/dia(page=${currentPage != null ? currentPage - 1 : 0})}" class="page-link" tabindex="-1" aria-disabled="true">Newer</a>
                     </li>
 
                     <!-- 페이지 번호 -->
-                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'" class="page-item">
+                    <li th:each="i : ${#numbers.sequence(0, totalPages != null ? totalPages - 1 : 0)}" th:classappend="${i == currentPage} ? 'active'" class="page-item">
                         <a th:href="@{/dia(page=${i})}" class="page-link" th:text="${i + 1}"></a>
                     </li>
 
                     <!-- 다음 페이지 -->
-                    <li th:classappend="${currentPage + 1 == totalPages} ? 'disabled'" class="page-item">
-                        <a th:href="@{/dia(page=${currentPage + 1})}" class="page-link">Older</a>
+                    <li th:classappend="${currentPage != null && currentPage + 1 == totalPages} ? 'disabled'" class="page-item">
+                        <a th:href="@{/dia(page=${currentPage != null ? currentPage + 1 : 0})}" class="page-link">Older</a>
                     </li>
                 </ul>
             </nav>
@@ -96,17 +96,17 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#!">소서리스</a></li>
-                                <li><a href="#!">팔라딘</a></li>
-                                <li><a href="#!">아마존</a></li>
+                                <li><a href="/diatwo/category/Sorceress">소서리스</a></li>
+                                <li><a href="/diatwo/category/Paladin">팔라딘</a></li>
+                                <li><a href="/diatwo/category/Amazon">아마존</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#!">어쌔신</a></li>
-                                <li><a href="#!">네크로멘서</a></li>
-                                <li><a href="#!">바바리안</a></li>
-                                <li><a href="#!">드루이드</a></li>
+                                <li><a href="/diatwo/category/Assessin">어쌔신</a></li>
+                                <li><a href="/diatwo/category/Necromancer">네크로멘서</a></li>
+                                <li><a href="/diatwo/category/Babarian">바바리안</a></li>
+                                <li><a href="/diatwo/category/Druid">드루이드</a></li>
                             </ul>
                         </div>
                     </div>
