@@ -78,4 +78,9 @@ public class DiaTwoServiceImpl implements DiaTwoService {
         return diaTwoBlogRepository.findByCategoriesContains(category, pageable);
     }
 
+    @Override
+    public Page<DiaTwoBlog> findByTitleContainingOrContextContaining(String query, Pageable pageable) {
+        return diaTwoBlogRepository.findByTitleContainingOrContextContaining(query, query, pageable);
+    }
+
 }

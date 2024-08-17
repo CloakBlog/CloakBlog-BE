@@ -36,4 +36,7 @@ public interface DiaTwoService {
     List<Categories> getAllCategories();
 
     Page<DiaTwoBlog> findByCategoryName(String name, Pageable pageable);
+
+    // Search
+    Page<DiaTwoBlog> findByTitleContainingOrContextContaining(String query, Pageable pageable);
 }

@@ -12,4 +12,6 @@ public interface DiaTwoBlogRepository extends JpaRepository<DiaTwoBlog, Long> {
     Page<DiaTwoBlog> findAll(Pageable pageable);
 
     Page<DiaTwoBlog> findByCategoriesContains(Categories categories, Pageable pageable);
+
+    Page<DiaTwoBlog> findByTitleContainingOrContextContaining(String title, String content, Pageable pageable);
 }

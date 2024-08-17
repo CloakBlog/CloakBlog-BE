@@ -50,18 +50,29 @@ public class DiaTwoController {
                           @RequestParam(value = "size", defaultValue = "5") int size) {
         Page<DiaTwoBlog> blogPage = diaTwoService.getAllDiaTwoBlog(page, size);
         model.addAttribute("posts", blogPage.getContent());
-        model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", blogPage.getTotalPages());
+        model.addAttribute("currentPage", page);
         return "/dia-two/home";
     }
 
     @GetMapping("/category/{name}")
     public String getPostsByCategory(@PathVariable("name") String name, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
-        Pageable pageable = PageRequest.of(page, 10); // 페이지 크기는 10으로 설정
+        Pageable pageable = PageRequest.of(page, 5); // 페이지 크기는 5로 설정
         Page<DiaTwoBlog> postsPage = diaTwoService.findByCategoryName(name, pageable);
 
         model.addAttribute("posts", postsPage);
         model.addAttribute("category", name);
+        return "/dia-two/home";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("query") String query, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<DiaTwoBlog> searchResults = diaTwoService.findByTitleContainingOrContextContaining(query, pageable);
+        model.addAttribute("posts", searchResults.getContent());
+        model.addAttribute("totalPages", searchResults.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("query", query);
         return "/dia-two/home";
     }
 
