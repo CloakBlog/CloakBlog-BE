@@ -22,7 +22,7 @@ function connect() {
 function sendMessage() {
     var messageContent = document.getElementById("chatInput").value;
     if(messageContent && stompClient) {
-        stompClient.send("/app/sendMessage", {}, JSON.stringify({'content': messageContent, 'sender': 'User'}));
+        stompClient.send("/app/sendMessage", {}, JSON.stringify({'content': messageContent, 'sender': 'Anonymous'}));
         document.getElementById("chatInput").value = '';
     }
 }
