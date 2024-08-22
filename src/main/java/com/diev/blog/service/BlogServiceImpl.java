@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class DiaTwoServiceImpl implements DiaTwoService {
+public class BlogServiceImpl implements BlogService {
 
     @Autowired
     BlogRepository blogRepository;
@@ -29,7 +29,7 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     // Create
     @Transactional
     @Override
-    public Blog saveDiaTwoBlog(String title, String content, String img, String folderPath, Set<Categories> categories) {
+    public Blog save(String title, String content, String img, String folderPath, Set<Categories> categories) {
         Blog blog = new Blog(title, content, img, folderPath, categories);
 
         return blogRepository.save(blog);
@@ -37,7 +37,7 @@ public class DiaTwoServiceImpl implements DiaTwoService {
 
     // Read - All
     @Override
-    public Page<Blog> getAllDiaTwoBlog(int page, int size) {
+    public Page<Blog> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return blogRepository.findAll(pageable);
     }
@@ -51,7 +51,7 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     // Update
     @Transactional
     @Override
-    public Blog updateDiaTwoBlog(long id, BlogDto blogDto) throws IOException {
+    public Blog update(long id, BlogDto blogDto) throws IOException {
         Blog blog = blogRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다!")
         );
@@ -67,7 +67,7 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     }
 
     @Override
-    public List<Categories> getAllCategories() {
+    public List<Categories> findAllCategories() {
         return categoriesRepository.findAll();
     }
 

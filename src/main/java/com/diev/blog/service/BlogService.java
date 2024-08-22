@@ -12,28 +12,28 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-public interface DiaTwoService {
+public interface BlogService {
 
     // Create
     @Transactional
-    Blog saveDiaTwoBlog(String title, String content, String img, String folderPath, Set<Categories> categories);
+    Blog save(String title, String content, String img, String folderPath, Set<Categories> categories);
 
     // Read - All
-    Page<Blog> getAllDiaTwoBlog(int page, int size);
+    Page<Blog> findAll(int page, int size);
 
     // Read - Detail
     Blog getById(Long id);
 
     // Update
     @Transactional
-    Blog updateDiaTwoBlog(long id, BlogDto request) throws IOException;
+    Blog update(long id, BlogDto request) throws IOException;
 
     // Delete
     @Transactional
     void delete(long id);
 
     // Categories
-    List<Categories> getAllCategories();
+    List<Categories> findAllCategories();
 
     Page<Blog> findByCategoryName(String name, Pageable pageable);
 

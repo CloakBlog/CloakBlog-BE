@@ -3,7 +3,7 @@ package com.diev.blog.controller;
 import com.diev.blog.domain.Categories;
 import com.diev.blog.domain.Blog;
 import com.diev.blog.dto.BlogDto;
-import com.diev.blog.service.DiaTwoService;
+import com.diev.blog.service.BlogService;
 import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -35,20 +35,20 @@ import com.diev.blog.utils.FileUtils;
 public class DiaTwoController {
 
     @Autowired
-    private final DiaTwoService diaTwoService;
+    private final BlogService blogService;
 
     @Autowired
     ServletContext context;
 
-    public DiaTwoController(DiaTwoService diaTwoService) {
-        this.diaTwoService = diaTwoService;
+    public DiaTwoController(BlogService blogService) {
+        this.blogService = blogService;
     }
 
     @GetMapping("/")
     public String diaHome(Model model,
                           @RequestParam(value = "page", defaultValue = "0") int page,
                           @RequestParam(value = "size", defaultValue = "5") int size) {
-        Page<Blog> blogPage = diaTwoService.getAllDiaTwoBlog(page, size);
+        Page<Blog> blogPage = blogService.findAll(page, size);
         model.addAttribute("posts", blogPage.getContent());
         model.addAttribute("totalPages", blogPage.getTotalPages());
         model.addAttribute("currentPage", page);
@@ -58,7 +58,7 @@ public class DiaTwoController {
     @GetMapping("/category/{name}")
     public String getPostsByCategory(@PathVariable("name") String name, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 5); // 페이지 크기는 5로 설정
-        Page<Blog> postsPage = diaTwoService.findByCategoryName(name, pageable);
+        Page<Blog> postsPage = blogService.findByCategoryName(name, pageable);
 
         model.addAttribute("posts", postsPage);
         model.addAttribute("category", name);
@@ -68,7 +68,7 @@ public class DiaTwoController {
     @GetMapping("/search")
     public String search(@RequestParam("query") String query, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 5);
-        Page<Blog> searchResults = diaTwoService.findByTitleContainingOrContextContaining(query, pageable);
+        Page<Blog> searchResults = blogService.findByTitleContainingOrContextContaining(query, pageable);
         model.addAttribute("posts", searchResults.getContent());
         model.addAttribute("totalPages", searchResults.getTotalPages());
         model.addAttribute("currentPage", page);
@@ -78,14 +78,14 @@ public class DiaTwoController {
 
     @GetMapping("/post/{id}")
     public String getAllBlogs(@PathVariable("id") Long id, Model model) {
-        Blog blog = diaTwoService.getById(id);
+        Blog blog = blogService.getById(id);
         model.addAttribute("post", blog);
         return "/dia-two/post_detail";
     }
 
     @GetMapping("/post")
     public String diaBlogWrite(Model model) {
-        List<Categories> categories = diaTwoService.getAllCategories();
+        List<Categories> categories = blogService.findAllCategories();
         model.addAttribute("categories", categories);
         return "/dia-two/post_create";
     }
@@ -101,7 +101,7 @@ public class DiaTwoController {
         if (multipartFile.isEmpty()) {
             // 파일이 첨부되지 않은 경우의 처리
             // 예를 들어, 기본 이미지를 설정하거나 파일 업로드 없이 저장할 수 있습니다.
-            Blog blog = diaTwoService.saveDiaTwoBlog(title, content, null, null, categories);
+            Blog blog = blogService.save(title, content, null, null, categories);
             return "redirect:/diatwo/post/" + blog.getId();
         }
 
@@ -123,19 +123,19 @@ public class DiaTwoController {
             e.printStackTrace();
         }
 
-        Blog blog = diaTwoService.saveDiaTwoBlog(title, content, uniqueFileName, folderPath, categories);
+        Blog blog = blogService.save(title, content, uniqueFileName, folderPath, categories);
         return "redirect:/diatwo/post/" + blog.getId();
     }
 
 
     @PutMapping(value = "/post/{id}", consumes = "multipart/form-data")
     public Blog diaBlogUpdate(@PathVariable("id") long id, @ModelAttribute BlogDto request) throws IOException {
-        return diaTwoService.updateDiaTwoBlog(id, request);
+        return blogService.update(id, request);
     }
 
     @DeleteMapping("/post/{id}")
     public String diaBlogDelete(@PathVariable("id") long id) {
-        diaTwoService.delete(id);
+        blogService.delete(id);
         return "Delete Successfully!";
     }
 
