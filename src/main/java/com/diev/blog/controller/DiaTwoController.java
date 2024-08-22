@@ -1,7 +1,7 @@
 package com.diev.blog.controller;
 
 import com.diev.blog.domain.Categories;
-import com.diev.blog.domain.DiaTwoBlog;
+import com.diev.blog.domain.Blog;
 import com.diev.blog.dto.BlogDto;
 import com.diev.blog.service.DiaTwoService;
 import jakarta.servlet.ServletContext;
@@ -48,7 +48,7 @@ public class DiaTwoController {
     public String diaHome(Model model,
                           @RequestParam(value = "page", defaultValue = "0") int page,
                           @RequestParam(value = "size", defaultValue = "5") int size) {
-        Page<DiaTwoBlog> blogPage = diaTwoService.getAllDiaTwoBlog(page, size);
+        Page<Blog> blogPage = diaTwoService.getAllDiaTwoBlog(page, size);
         model.addAttribute("posts", blogPage.getContent());
         model.addAttribute("totalPages", blogPage.getTotalPages());
         model.addAttribute("currentPage", page);
@@ -58,7 +58,7 @@ public class DiaTwoController {
     @GetMapping("/category/{name}")
     public String getPostsByCategory(@PathVariable("name") String name, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 5); // 페이지 크기는 5로 설정
-        Page<DiaTwoBlog> postsPage = diaTwoService.findByCategoryName(name, pageable);
+        Page<Blog> postsPage = diaTwoService.findByCategoryName(name, pageable);
 
         model.addAttribute("posts", postsPage);
         model.addAttribute("category", name);
@@ -68,7 +68,7 @@ public class DiaTwoController {
     @GetMapping("/search")
     public String search(@RequestParam("query") String query, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 5);
-        Page<DiaTwoBlog> searchResults = diaTwoService.findByTitleContainingOrContextContaining(query, pageable);
+        Page<Blog> searchResults = diaTwoService.findByTitleContainingOrContextContaining(query, pageable);
         model.addAttribute("posts", searchResults.getContent());
         model.addAttribute("totalPages", searchResults.getTotalPages());
         model.addAttribute("currentPage", page);
@@ -78,8 +78,8 @@ public class DiaTwoController {
 
     @GetMapping("/post/{id}")
     public String getAllBlogs(@PathVariable("id") Long id, Model model) {
-        DiaTwoBlog diaTwoBlog = diaTwoService.getById(id);
-        model.addAttribute("post", diaTwoBlog);
+        Blog blog = diaTwoService.getById(id);
+        model.addAttribute("post", blog);
         return "/dia-two/post_detail";
     }
 
@@ -101,8 +101,8 @@ public class DiaTwoController {
         if (multipartFile.isEmpty()) {
             // 파일이 첨부되지 않은 경우의 처리
             // 예를 들어, 기본 이미지를 설정하거나 파일 업로드 없이 저장할 수 있습니다.
-            DiaTwoBlog diaTwoBlog = diaTwoService.saveDiaTwoBlog(title, content, null, null, categories);
-            return "redirect:/diatwo/post/" + diaTwoBlog.getId();
+            Blog blog = diaTwoService.saveDiaTwoBlog(title, content, null, null, categories);
+            return "redirect:/diatwo/post/" + blog.getId();
         }
 
         String basePath = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads";
@@ -123,13 +123,13 @@ public class DiaTwoController {
             e.printStackTrace();
         }
 
-        DiaTwoBlog diaTwoBlog = diaTwoService.saveDiaTwoBlog(title, content, uniqueFileName, folderPath, categories);
-        return "redirect:/diatwo/post/" + diaTwoBlog.getId();
+        Blog blog = diaTwoService.saveDiaTwoBlog(title, content, uniqueFileName, folderPath, categories);
+        return "redirect:/diatwo/post/" + blog.getId();
     }
 
 
     @PutMapping(value = "/post/{id}", consumes = "multipart/form-data")
-    public DiaTwoBlog diaBlogUpdate(@PathVariable("id") long id, @ModelAttribute BlogDto request) throws IOException {
+    public Blog diaBlogUpdate(@PathVariable("id") long id, @ModelAttribute BlogDto request) throws IOException {
         return diaTwoService.updateDiaTwoBlog(id, request);
     }
 

@@ -2,8 +2,8 @@ package com.diev.blog.service;
 
 import com.diev.blog.domain.Categories;
 import com.diev.blog.domain.CategoriesRepository;
-import com.diev.blog.domain.DiaTwoBlog;
-import com.diev.blog.domain.DiaTwoBlogRepository;
+import com.diev.blog.domain.Blog;
+import com.diev.blog.domain.BlogRepository;
 
 import com.diev.blog.dto.BlogDto;
 import jakarta.transaction.Transactional;
@@ -21,7 +21,7 @@ import java.util.Set;
 public class DiaTwoServiceImpl implements DiaTwoService {
 
     @Autowired
-    DiaTwoBlogRepository diaTwoBlogRepository;
+    BlogRepository blogRepository;
 
     @Autowired
     CategoriesRepository categoriesRepository;
@@ -29,41 +29,41 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     // Create
     @Transactional
     @Override
-    public DiaTwoBlog saveDiaTwoBlog(String title, String content, String img, String folderPath, Set<Categories> categories) {
-        DiaTwoBlog blog = new DiaTwoBlog(title, content, img, folderPath, categories);
+    public Blog saveDiaTwoBlog(String title, String content, String img, String folderPath, Set<Categories> categories) {
+        Blog blog = new Blog(title, content, img, folderPath, categories);
 
-        return diaTwoBlogRepository.save(blog);
+        return blogRepository.save(blog);
     }
 
     // Read - All
     @Override
-    public Page<DiaTwoBlog> getAllDiaTwoBlog(int page, int size) {
+    public Page<Blog> getAllDiaTwoBlog(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return diaTwoBlogRepository.findAll(pageable);
+        return blogRepository.findAll(pageable);
     }
 
     // Read - Detail
     @Override
-    public DiaTwoBlog getById(Long id) {
-        return diaTwoBlogRepository.getById(id);
+    public Blog getById(Long id) {
+        return blogRepository.getById(id);
     }
 
     // Update
     @Transactional
     @Override
-    public DiaTwoBlog updateDiaTwoBlog(long id, BlogDto blogDto) throws IOException {
-        DiaTwoBlog diaTwoBlog = diaTwoBlogRepository.findById(id).orElseThrow(
+    public Blog updateDiaTwoBlog(long id, BlogDto blogDto) throws IOException {
+        Blog blog = blogRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다!")
         );
 
-        diaTwoBlog.update(blogDto.getTitle(), blogDto.getContent(), String.valueOf(blogDto.getImg()), diaTwoBlog.getFolderPath(), diaTwoBlog.getCategories());
-        return diaTwoBlog;
+        blog.update(blogDto.getTitle(), blogDto.getContent(), String.valueOf(blogDto.getImg()), blog.getFolderPath(), blog.getCategories());
+        return blog;
     }
 
     @Transactional
     @Override
     public void delete(long id) {
-        diaTwoBlogRepository.deleteById(id);
+        blogRepository.deleteById(id);
     }
 
     @Override
@@ -72,14 +72,14 @@ public class DiaTwoServiceImpl implements DiaTwoService {
     }
 
     @Override
-    public Page<DiaTwoBlog> findByCategoryName(String categoryName, Pageable pageable) {
+    public Page<Blog> findByCategoryName(String categoryName, Pageable pageable) {
         Categories category = categoriesRepository.findByName(categoryName);
-        return diaTwoBlogRepository.findByCategoriesContains(category, pageable);
+        return blogRepository.findByCategoriesContains(category, pageable);
     }
 
     @Override
-    public Page<DiaTwoBlog> findByTitleContainingOrContextContaining(String query, Pageable pageable) {
-        return diaTwoBlogRepository.findByTitleContainingOrContextContaining(query, query, pageable);
+    public Page<Blog> findByTitleContainingOrContextContaining(String query, Pageable pageable) {
+        return blogRepository.findByTitleContainingOrContextContaining(query, query, pageable);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.diev.blog.service;
 
 import com.diev.blog.domain.Categories;
-import com.diev.blog.domain.DiaTwoBlog;
+import com.diev.blog.domain.Blog;
 
 import com.diev.blog.dto.BlogDto;
 import jakarta.transaction.Transactional;
@@ -16,17 +16,17 @@ public interface DiaTwoService {
 
     // Create
     @Transactional
-    DiaTwoBlog saveDiaTwoBlog(String title, String content, String img, String folderPath, Set<Categories> categories);
+    Blog saveDiaTwoBlog(String title, String content, String img, String folderPath, Set<Categories> categories);
 
     // Read - All
-    Page<DiaTwoBlog> getAllDiaTwoBlog(int page, int size);
+    Page<Blog> getAllDiaTwoBlog(int page, int size);
 
     // Read - Detail
-    DiaTwoBlog getById(Long id);
+    Blog getById(Long id);
 
     // Update
     @Transactional
-    DiaTwoBlog updateDiaTwoBlog(long id, BlogDto request) throws IOException;
+    Blog updateDiaTwoBlog(long id, BlogDto request) throws IOException;
 
     // Delete
     @Transactional
@@ -35,8 +35,8 @@ public interface DiaTwoService {
     // Categories
     List<Categories> getAllCategories();
 
-    Page<DiaTwoBlog> findByCategoryName(String name, Pageable pageable);
+    Page<Blog> findByCategoryName(String name, Pageable pageable);
 
     // Search
-    Page<DiaTwoBlog> findByTitleContainingOrContextContaining(String query, Pageable pageable);
+    Page<Blog> findByTitleContainingOrContextContaining(String query, Pageable pageable);
 }

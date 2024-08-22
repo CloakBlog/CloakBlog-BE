@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table
-public class DiaTwoBlog {
+public class Blog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +47,7 @@ public class DiaTwoBlog {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public DiaTwoBlog(String title, String content, String img, String folderPath, Set<Categories> categories) {
+    public Blog(String title, String content, String img, String folderPath, Set<Categories> categories) {
         this.title = title;
         this.context = content;
         this.img = img;

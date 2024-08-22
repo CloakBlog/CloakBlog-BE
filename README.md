@@ -33,7 +33,7 @@
 - Java 17
 - Spring Boot 3
 - JPA
-- H2
+- H2 (임시방편)
 - thymeleaf
 
 [ERD](https://www.erdcloud.com/d/dRg8giLK3qJa8h3Rf)
