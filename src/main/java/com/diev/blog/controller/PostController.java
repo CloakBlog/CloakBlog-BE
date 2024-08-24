@@ -1,9 +1,9 @@
 package com.diev.blog.controller;
 
 import com.diev.blog.domain.Categories;
-import com.diev.blog.domain.Blog;
+import com.diev.blog.domain.Post;
 import com.diev.blog.dto.BlogDto;
-import com.diev.blog.service.BlogService;
+import com.diev.blog.service.PostService;
 import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -31,63 +31,63 @@ import com.diev.blog.utils.FileUtils;
 
 //@RestController
 @Controller
-@RequestMapping("/diatwo")
-public class DiaTwoController {
+@RequestMapping("/post")
+public class PostController {
 
     @Autowired
-    private final BlogService blogService;
+    private final PostService postService;
 
     @Autowired
     ServletContext context;
 
-    public DiaTwoController(BlogService blogService) {
-        this.blogService = blogService;
+    public PostController(PostService postService) {
+        this.postService = postService;
     }
 
     @GetMapping("/")
     public String diaHome(Model model,
                           @RequestParam(value = "page", defaultValue = "0") int page,
                           @RequestParam(value = "size", defaultValue = "5") int size) {
-        Page<Blog> blogPage = blogService.findAll(page, size);
-        model.addAttribute("posts", blogPage.getContent());
-        model.addAttribute("totalPages", blogPage.getTotalPages());
+        Page<Post> postPage = postService.findAll(page, size);
+        model.addAttribute("posts", postPage.getContent());
+        model.addAttribute("totalPages", postPage.getTotalPages());
         model.addAttribute("currentPage", page);
-        return "/dia-two/home";
+        return "/post/home";
     }
 
     @GetMapping("/category/{name}")
     public String getPostsByCategory(@PathVariable("name") String name, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 5); // 페이지 크기는 5로 설정
-        Page<Blog> postsPage = blogService.findByCategoryName(name, pageable);
+        Page<Post> postsPage = postService.findByCategoryName(name, pageable);
 
         model.addAttribute("posts", postsPage);
         model.addAttribute("category", name);
-        return "/dia-two/home";
+        return "/post/home";
     }
 
     @GetMapping("/search")
     public String search(@RequestParam("query") String query, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 5);
-        Page<Blog> searchResults = blogService.findByTitleContainingOrContextContaining(query, pageable);
+        Page<Post> searchResults = postService.findByTitleContainingOrContextContaining(query, pageable);
         model.addAttribute("posts", searchResults.getContent());
         model.addAttribute("totalPages", searchResults.getTotalPages());
         model.addAttribute("currentPage", page);
         model.addAttribute("query", query);
-        return "/dia-two/home";
+        return "/post/home";
     }
 
     @GetMapping("/post/{id}")
     public String getAllBlogs(@PathVariable("id") Long id, Model model) {
-        Blog blog = blogService.getById(id);
-        model.addAttribute("post", blog);
-        return "/dia-two/post_detail";
+        Post post = postService.getById(id);
+        model.addAttribute("post", post);
+        return "/post/post_detail";
     }
 
     @GetMapping("/post")
     public String diaBlogWrite(Model model) {
-        List<Categories> categories = blogService.findAllCategories();
+        List<Categories> categories = postService.findAllCategories();
         model.addAttribute("categories", categories);
-        return "/dia-two/post_create";
+        return "/post/post_create";
     }
 
     @PostMapping("/post")
@@ -101,12 +101,12 @@ public class DiaTwoController {
         if (multipartFile.isEmpty()) {
             // 파일이 첨부되지 않은 경우의 처리
             // 예를 들어, 기본 이미지를 설정하거나 파일 업로드 없이 저장할 수 있습니다.
-            Blog blog = blogService.save(title, content, null, null, categories);
-            return "redirect:/diatwo/post/" + blog.getId();
+            Post post = postService.save(title, content, null, null, categories);
+            return "redirect:/post/post/" + post.getId();
         }
 
         String basePath = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads";
-        String appName = "Dia-Two";
+        String appName = "testPost";
 
         // 폴더 경로 생성 및 유니크 파일명 생성
         String folderPath = FileUtils.generateFolderPathByAppAndDate(basePath, appName);
@@ -123,26 +123,26 @@ public class DiaTwoController {
             e.printStackTrace();
         }
 
-        Blog blog = blogService.save(title, content, uniqueFileName, folderPath, categories);
-        return "redirect:/diatwo/post/" + blog.getId();
+        Post post = postService.save(title, content, uniqueFileName, folderPath, categories);
+        return "redirect:/post/post/" + post.getId();
     }
 
 
     @PutMapping(value = "/post/{id}", consumes = "multipart/form-data")
-    public Blog diaBlogUpdate(@PathVariable("id") long id, @ModelAttribute BlogDto request) throws IOException {
-        return blogService.update(id, request);
+    public Post diaBlogUpdate(@PathVariable("id") long id, @ModelAttribute BlogDto request) throws IOException {
+        return postService.update(id, request);
     }
 
     @DeleteMapping("/post/{id}")
     public String diaBlogDelete(@PathVariable("id") long id) {
-        blogService.delete(id);
+        postService.delete(id);
         return "Delete Successfully!";
     }
 
     @GetMapping("/img")
     public ResponseEntity<Resource> display(@RequestParam("filename") String filename) {
         String path = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads";
-        String appName = "/Dia-Two/";
+        String appName = "/testPost/";
         String fullPath = path + appName + filename;
         Resource resource = new FileSystemResource(fullPath);
 

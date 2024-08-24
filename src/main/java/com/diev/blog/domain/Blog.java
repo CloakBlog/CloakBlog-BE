@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -19,47 +20,21 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="title", nullable = false, length = 20)
-    private String title;
+    @Column(name = "host_user_id", nullable = false)
+    private String hostUserId;
 
-    @Column(name="context")
-    private String context;
+    @Column(name = "code", nullable = false)
+    private String code;
 
-    @Column(name="img")
-    private String img;
+    @Column(name = "blog_title", nullable = false)
+    private String blogTitle;
 
-    @Column(name="folderPath")
-    private String folderPath;
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "blog_categories",
-            joinColumns = @JoinColumn(name = "blog_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private Set<Categories> categories;
-
-    @Column(name="created_at")
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @Column(name="updated_at")
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
-    public Blog(String title, String content, String img, String folderPath, Set<Categories> categories) {
-        this.title = title;
-        this.context = content;
-        this.img = img;
-        this.folderPath = folderPath;
-        this.categories = categories;
-    }
-
-    public void update(String title, String content, String img, String folderPath, Set<Categories> categories) {
-        this.title = title;
-        this.context = content;
-        this.img = img;
-        this.folderPath = folderPath;
-        this.categories = categories;
+    public Blog(String hostUserId, String code, String blogTitle) {
+        this.hostUserId = hostUserId;
+        this.code = code;
+        this.blogTitle = blogTitle;
     }
 }
