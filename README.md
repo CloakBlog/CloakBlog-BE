@@ -59,6 +59,10 @@
 - DB 재정의
 - 추가 기능 정의
   - ToDo List
+  - 회원 관련
+    - 회원 가입
+    - 로그인
+    - 세션 처리
   - 인증과 권한
   - Map API
   - Image, Video
