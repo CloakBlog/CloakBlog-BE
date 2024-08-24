@@ -24,14 +24,14 @@
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="/diatwo/">DIABLO 2: Resurrected</a>
+    <a class="navbar-brand" href="/post/">DIABLO 2: Resurrected</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
         <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/diatwo/">Blog</a></li>
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/post/">Blog</a></li>
       </ul>
     </div>
   </div>
@@ -47,13 +47,13 @@
           <!-- Post title-->
           <h1 class="fw-bolder mb-1" th:text="${post.title}"></h1>
           <!-- Post meta content-->
-          <div class="text-muted fst-italic mb-2" th:text="'Posted on ' + ${post.createdAt} + ' by DIABLO ADMIN'"></div>
+          <div class="text-muted fst-italic mb-2" th:text="'Posted on ' + ${post.createdAt} + ' by ' + ${post.writer}"></div>
           <!-- Post categories-->
 <!--          <a class="badge bg-secondary text-decoration-none link-light" href="#!" th:each="category : ${post.categories}" th:text="${category}">Web Design</a>-->
         </header>
         <!-- Preview image figure-->
         <figure class="mb-4">
-          <img class="img-fluid rounded" th:src="${post.img != null and !post.img.isEmpty()} ? @{/diatwo/img(filename=${post.img})} : @{/images/default.png}"
+          <img class="img-fluid rounded" th:src="${post.img != null and !post.img.isEmpty()} ? @{/post/img(filename=${post.img})} : @{/images/default.png}"
                alt="Blog Image" />
         </figure>
         <!-- Post content-->
@@ -110,7 +110,7 @@
       <div class="card mb-4">
         <div class="card-header">Search</div>
         <div class="card-body">
-          <form th:action="@{/diatwo/search}" method="get">
+          <form th:action="@{/post/search}" method="get">
             <div class="input-group">
               <input class="form-control" type="text" name="query" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
               <button class="btn btn-primary" id="button-search" type="submit">Go!</button>
@@ -125,17 +125,17 @@
           <div class="row">
             <div class="col-sm-6">
               <ul class="list-unstyled mb-0">
-                <li><a href="/diatwo/category/Sorceress">소서리스</a></li>
-                <li><a href="/diatwo/category/Paladin">팔라딘</a></li>
-                <li><a href="/diatwo/category/Amazon">아마존</a></li>
+                <li><a href="/post/category/Sorceress">소서리스</a></li>
+                <li><a href="/post/category/Paladin">팔라딘</a></li>
+                <li><a href="/post/category/Amazon">아마존</a></li>
               </ul>
             </div>
             <div class="col-sm-6">
               <ul class="list-unstyled mb-0">
-                <li><a href="/diatwo/category/Assessin">어쌔신</a></li>
-                <li><a href="/diatwo/category/Necromancer">네크로멘서</a></li>
-                <li><a href="/diatwo/category/Babarian">바바리안</a></li>
-                <li><a href="/diatwo/category/Druid">드루이드</a></li>
+                <li><a href="/post/category/Assessin">어쌔신</a></li>
+                <li><a href="/post/category/Necromancer">네크로멘서</a></li>
+                <li><a href="/post/category/Babarian">바바리안</a></li>
+                <li><a href="/post/category/Druid">드루이드</a></li>
               </ul>
             </div>
           </div>

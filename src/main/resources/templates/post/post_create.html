@@ -19,10 +19,10 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="/diatwo/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/post/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
         <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/diatwo/">Blog</a></li>
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/post/">Blog</a></li>
       </ul>
     </div>
   </div>
@@ -33,7 +33,7 @@
     <div class="col-lg-8 mx-auto">
       <!-- Create Post Form -->
       <h2>Create New Blog Post</h2>
-      <form th:action="@{/diatwo/post}" method="post" enctype="multipart/form-data">
+      <form th:action="@{/post/post}" method="post" enctype="multipart/form-data">
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
           <input type="text" class="form-control" id="title" name="title" placeholder="Enter the title" required>

@@ -24,13 +24,13 @@
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/diatwo/">DIABLO 2: Resurrected</a>
+        <a class="navbar-brand" href="/post/">DIABLO 2: Resurrected</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/diatwo/">Blog</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/post/">Blog</a></li>
             </ul>
         </div>
     </div>
@@ -53,15 +53,15 @@
 
             <!-- Nested row for non-featured blog posts-->
             <div th:each="post : ${posts}" class="card mb-4">
-                <a th:href="@{/diatwo/post/{id}(id=${post.id})}">
-                    <img class="img-fluid rounded" th:src="${post.img != null and !post.img.isEmpty()} ? @{/diatwo/img(filename=${post.img})} : @{/images/default.png}"
+                <a th:href="@{/post/post/{id}(id=${post.id})}">
+                    <img class="img-fluid rounded" th:src="${post.img != null and !post.img.isEmpty()} ? @{/post/img(filename=${post.img})} : @{/images/default.png}"
                          alt="Blog Image" />
                 </a>
                 <div class="card-body">
                     <div class="small text-muted" th:text="${post.createdAt}"></div>
                     <h2 class="card-title" th:text="${post.title}"></h2>
                     <p class="card-text" th:text="${post.context}"></p>
-                    <a class="btn btn-primary" th:href="@{/diatwo/post/{id}(id=${post.id})}">Read more →</a>
+                    <a class="btn btn-primary" th:href="@{/post/post/{id}(id=${post.id})}">Read more →</a>
                 </div>
             </div>
             <!-- Pagination-->
@@ -70,17 +70,17 @@
                 <ul class="pagination justify-content-center my-4">
                     <!-- 이전 페이지 -->
                     <li th:classappend="${currentPage == null || currentPage == 0} ? 'disabled'" class="page-item">
-                        <a th:href="@{/dia(page=${currentPage != null ? currentPage - 1 : 0})}" class="page-link" tabindex="-1" aria-disabled="true">Newer</a>
+                        <a th:href="@{/post/(page=${currentPage != null ? currentPage - 1 : 0})}" class="page-link" tabindex="-1" aria-disabled="true">Newer</a>
                     </li>
 
                     <!-- 페이지 번호 -->
-                    <li th:each="i : ${#numbers.sequence(0, totalPages != null ? totalPages - 1 : 0)}" th:classappend="${i == currentPage} ? 'active'" class="page-item">
-                        <a th:href="@{/dia(page=${i})}" class="page-link" th:text="${i + 1}"></a>
+                    <li th:each="i : ${#numbers.sequence(0, totalPages != 0 ? totalPages - 1 : 0)}" th:classappend="${i == currentPage} ? 'active'" class="page-item">
+                        <a th:href="@{/post/(page=${i})}" class="page-link" th:text="${i + 1}"></a>
                     </li>
 
                     <!-- 다음 페이지 -->
                     <li th:classappend="${currentPage != null && currentPage + 1 == totalPages} ? 'disabled'" class="page-item">
-                        <a th:href="@{/dia(page=${currentPage != null ? currentPage + 1 : 0})}" class="page-link">Older</a>
+                        <a th:href="@{/post/(page=${currentPage != null ? currentPage + 1 : 0})}" class="page-link">Older</a>
                     </li>
                 </ul>
             </nav>
@@ -106,17 +106,17 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="/diatwo/category/Sorceress">소서리스</a></li>
-                                <li><a href="/diatwo/category/Paladin">팔라딘</a></li>
-                                <li><a href="/diatwo/category/Amazon">아마존</a></li>
+                                <li><a href="/post/category/Sorceress">소서리스</a></li>
+                                <li><a href="/post/category/Paladin">팔라딘</a></li>
+                                <li><a href="/post/category/Amazon">아마존</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="/diatwo/category/Assessin">어쌔신</a></li>
-                                <li><a href="/diatwo/category/Necromancer">네크로멘서</a></li>
-                                <li><a href="/diatwo/category/Babarian">바바리안</a></li>
-                                <li><a href="/diatwo/category/Druid">드루이드</a></li>
+                                <li><a href="/post/category/Assessin">어쌔신</a></li>
+                                <li><a href="/post/category/Necromancer">네크로멘서</a></li>
+                                <li><a href="/post/category/Babarian">바바리안</a></li>
+                                <li><a href="/post/category/Druid">드루이드</a></li>
                             </ul>
                         </div>
                     </div>
