@@ -19,7 +19,7 @@ public class Categories {
     private String name;
 
     @ManyToMany(mappedBy = "categories")
-    private Set<Blog> blogs;
+    private Set<Post> posts;
 
 }
 

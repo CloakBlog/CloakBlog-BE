@@ -10,11 +10,11 @@ import java.sql.Date;
 @NoArgsConstructor
 @Entity
 @Table
-public class User {
+public class Member {
 
     @Id
-    @Column(name = "user_id", length = 100, nullable = false)
-    private String userId;
+    @Column(name = "member_id", length = 100, nullable = false)
+    private String memberId;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -34,8 +34,8 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
-    public User(String userId, String password, String name, String nickName, String code) {
-        this.userId = userId;
+    public Member(String memberId, String password, String name, String nickName, String code) {
+        this.memberId = memberId;
         this.password = password;
         this.name = name;
         this.nickName = nickName;

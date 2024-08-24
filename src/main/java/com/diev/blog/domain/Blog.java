@@ -20,8 +20,8 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "host_user_id", nullable = false)
-    private String hostUserId;
+    @Column(name = "host_member_id", nullable = false)
+    private String hostMemberId;
 
     @Column(name = "code", nullable = false)
     private String code;
@@ -32,8 +32,8 @@ public class Blog {
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    public Blog(String hostUserId, String code, String blogTitle) {
-        this.hostUserId = hostUserId;
+    public Blog(String hostMemberId, String code, String blogTitle) {
+        this.hostMemberId = hostMemberId;
         this.code = code;
         this.blogTitle = blogTitle;
     }

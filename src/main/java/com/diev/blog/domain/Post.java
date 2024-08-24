@@ -37,8 +37,8 @@ public class Post {
 
     @ManyToMany
     @JoinTable(
-            name = "blog_categories",
-            joinColumns = @JoinColumn(name = "blog_id"),
+            name = "post_categories",
+            joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Categories> categories;
@@ -51,8 +51,9 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Post(String title, String content, String img, String folderPath, Set<Categories> categories) {
+    public Post(String title, String writer, String content, String img, String folderPath, Set<Categories> categories) {
         this.title = title;
+        this.writer = writer;
         this.context = content;
         this.img = img;
         this.folderPath = folderPath;

@@ -27,7 +27,7 @@ public class PostServiceImpl implements PostService {
     @Transactional
     @Override
     public Post save(String title, String content, String img, String folderPath, Set<Categories> categories) {
-        Post post = new Post(title, content, img, folderPath, categories);
+        Post post = new Post(title, "testWriter", content, img, folderPath, categories);
 
         return postRepository.save(post);
     }
