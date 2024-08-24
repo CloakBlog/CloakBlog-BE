@@ -1,5 +1,6 @@
 package com.diev.blog.domain;
 
+import com.diev.blog.dto.PostDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,13 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "writer", nullable = false)
-    private String writer;
+    @ManyToOne
+    @JoinColumn(name = "blogId")
+    private Blog blog;
+
+    @ManyToOne
+    @JoinColumn(name = "writerEmail")
+    private Member writer;
 
     @Column(name = "title", nullable = false, length = 20)
     private String title;
@@ -51,13 +57,13 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Post(String title, String writer, String content, String img, String folderPath, Set<Categories> categories) {
-        this.title = title;
-        this.writer = writer;
-        this.context = content;
-        this.img = img;
+    public Post(PostDto postDto, String uniqueFileName, String folderPath) {
+        this.title = postDto.getTitle();
+        this.writer = postDto.getWriter();
+        this.context = postDto.getContent();
+        this.img = uniqueFileName;
         this.folderPath = folderPath;
-        this.categories = categories;
+        this.categories = postDto.getCategoryIds();
     }
 
     public void update(String title, String content, String img, String folderPath, Set<Categories> categories) {

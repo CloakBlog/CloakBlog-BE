@@ -20,8 +20,9 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "host_member_id", nullable = false)
-    private String hostMemberId;
+    @ManyToOne
+    @JoinColumn(name = "host_member_id")
+    private Member hostMember;
 
     @Column(name = "code", nullable = false)
     private String code;
@@ -32,8 +33,11 @@ public class Blog {
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    public Blog(String hostMemberId, String code, String blogTitle) {
-        this.hostMemberId = hostMemberId;
+    @OneToMany(mappedBy = "blog")
+    private Set<BlogMember> blogMembers;
+
+    public Blog(Member hostMember, String code, String blogTitle) {
+        this.hostMember = hostMember;
         this.code = code;
         this.blogTitle = blogTitle;
     }

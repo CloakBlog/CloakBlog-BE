@@ -3,7 +3,7 @@ package com.diev.blog.service;
 import com.diev.blog.domain.Categories;
 
 import com.diev.blog.domain.Post;
-import com.diev.blog.dto.BlogDto;
+import com.diev.blog.dto.PostDto;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +16,7 @@ public interface PostService {
 
     // Create
     @Transactional
-    Post save(String title, String content, String img, String folderPath, Set<Categories> categories);
+    Post save(PostDto postDto, String uniqueFileName, String folderPath);
 
     // Read - All
     Page<Post> findAll(int page, int size);
@@ -26,7 +26,7 @@ public interface PostService {
 
     // Update
     @Transactional
-    Post update(long id, BlogDto request) throws IOException;
+    Post update(long id, PostDto request) throws IOException;
 
     // Delete
     @Transactional

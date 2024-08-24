@@ -2,7 +2,7 @@ package com.diev.blog.controller;
 
 import com.diev.blog.domain.Categories;
 import com.diev.blog.domain.Post;
-import com.diev.blog.dto.BlogDto;
+import com.diev.blog.dto.PostDto;
 import com.diev.blog.service.PostService;
 import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class PostController {
     }
 
     @GetMapping("/")
-    public String diaHome(Model model,
+    public String postHome(Model model,
                           @RequestParam(value = "page", defaultValue = "0") int page,
                           @RequestParam(value = "size", defaultValue = "5") int size) {
         Page<Post> postPage = postService.findAll(page, size);
@@ -77,31 +77,28 @@ public class PostController {
     }
 
     @GetMapping("/post/{id}")
-    public String getAllBlogs(@PathVariable("id") Long id, Model model) {
+    public String findAllPosts(@PathVariable("id") Long id, Model model) {
         Post post = postService.getById(id);
         model.addAttribute("post", post);
         return "/post/post_detail";
     }
 
     @GetMapping("/post")
-    public String diaBlogWrite(Model model) {
+    public String postWrite(Model model) {
         List<Categories> categories = postService.findAllCategories();
         model.addAttribute("categories", categories);
         return "/post/post_create";
     }
 
     @PostMapping("/post")
-    public String diaBlogSave(
-            @RequestParam("title") String title,
-            @RequestParam("content") String content,
-            @RequestParam("img") MultipartFile multipartFile,
-            @RequestParam("categoryIds") Set<Categories> categories) throws IOException {
+    public String postSave(@ModelAttribute PostDto postDto) throws IOException {
+        MultipartFile multipartFile = postDto.getImg();
 
         // 파일이 비어 있는지 확인
         if (multipartFile.isEmpty()) {
             // 파일이 첨부되지 않은 경우의 처리
             // 예를 들어, 기본 이미지를 설정하거나 파일 업로드 없이 저장할 수 있습니다.
-            Post post = postService.save(title, content, null, null, categories);
+            Post post = postService.save(postDto, null, null);
             return "redirect:/post/post/" + post.getId();
         }
 
@@ -123,18 +120,18 @@ public class PostController {
             e.printStackTrace();
         }
 
-        Post post = postService.save(title, content, uniqueFileName, folderPath, categories);
+        Post post = postService.save(postDto, uniqueFileName, folderPath);
         return "redirect:/post/post/" + post.getId();
     }
 
 
     @PutMapping(value = "/post/{id}", consumes = "multipart/form-data")
-    public Post diaBlogUpdate(@PathVariable("id") long id, @ModelAttribute BlogDto request) throws IOException {
+    public Post postUpdate(@PathVariable("id") long id, @ModelAttribute PostDto request) throws IOException {
         return postService.update(id, request);
     }
 
     @DeleteMapping("/post/{id}")
-    public String diaBlogDelete(@PathVariable("id") long id) {
+    public String postDelete(@PathVariable("id") long id) {
         postService.delete(id);
         return "Delete Successfully!";
     }

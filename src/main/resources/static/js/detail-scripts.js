@@ -6,6 +6,20 @@
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
 
+document.getElementById('postForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    fetch('/post', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+});
+
+
 var stompClient = null;
 
 function connect() {

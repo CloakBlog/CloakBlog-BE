@@ -1,19 +1,21 @@
 package com.diev.blog.dto;
 
+import com.diev.blog.domain.Categories;
+import com.diev.blog.domain.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Set;
+
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class BlogDto {
+public class PostDto {
     private String title;
     private String content;
     private MultipartFile img;
-
-    public BlogDto(String title, String context, MultipartFile img) {
-        this.title = title;
-        this.content = context;
-        this.img = img;
-    }
+    private Set<Categories> categoryIds;
+    private Member writer;
 }

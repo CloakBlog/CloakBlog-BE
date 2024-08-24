@@ -2,7 +2,7 @@ package com.diev.blog.service;
 
 import com.diev.blog.domain.*;
 
-import com.diev.blog.dto.BlogDto;
+import com.diev.blog.dto.PostDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,8 +26,9 @@ public class PostServiceImpl implements PostService {
     // Create
     @Transactional
     @Override
-    public Post save(String title, String content, String img, String folderPath, Set<Categories> categories) {
-        Post post = new Post(title, "testWriter", content, img, folderPath, categories);
+    public Post save(PostDto postDto, String uniqueFileName, String folderPath) {
+
+        Post post = new Post(postDto, uniqueFileName, folderPath);
 
         return postRepository.save(post);
     }
@@ -48,13 +49,13 @@ public class PostServiceImpl implements PostService {
     // Update
     @Transactional
     @Override
-    public Post update(long id, BlogDto blogDto) throws IOException {
+    public Post update(long id, PostDto postDto) throws IOException {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다!")
         );
 
-        post.update(blogDto.getTitle(), blogDto.getContent(), String.valueOf(
-                blogDto.getImg()),
+        post.update(postDto.getTitle(), postDto.getContent(), String.valueOf(
+                postDto.getImg()),
                 post.getFolderPath(),
                 post.getCategories()
         );

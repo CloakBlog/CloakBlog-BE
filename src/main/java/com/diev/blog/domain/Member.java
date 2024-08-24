@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -33,6 +35,15 @@ public class Member {
 
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
+
+    @OneToOne(mappedBy = "hostMember")
+    private List<Blog> hostedBlogs;
+
+    @OneToMany(mappedBy = "member")
+    private Set<BlogMember> memberships;
+
+    @OneToMany(mappedBy = "writer")
+    private List<Post> posts;
 
     public Member(String memberId, String password, String name, String nickName, String code) {
         this.memberId = memberId;
