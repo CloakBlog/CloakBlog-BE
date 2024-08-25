@@ -26,7 +26,7 @@ public class Post {
     private Blog blog;
 
     @ManyToOne
-    @JoinColumn(name = "writerEmail")
+    @JoinColumn(name = "writer")
     private Member writer;
 
     @Column(name = "title", nullable = false, length = 20)
@@ -59,7 +59,7 @@ public class Post {
 
     public Post(PostDto postDto, String uniqueFileName, String folderPath) {
         this.title = postDto.getTitle();
-        this.writer = postDto.getWriter();
+//        this.writer = postDto.getWriter();
         this.context = postDto.getContent();
         this.img = uniqueFileName;
         this.folderPath = folderPath;

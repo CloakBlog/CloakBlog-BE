@@ -17,5 +17,5 @@ public class PostDto {
     private String content;
     private MultipartFile img;
     private Set<Categories> categoryIds;
-    private Member writer;
+    private String writer;
 }

@@ -7,7 +7,7 @@
   <meta name="author" content="" />
   <title>Create Blog Post</title>
   <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" th:href="@{assets/favicon.ico}" />
+  <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
   <!-- Core theme CSS (includes Bootstrap)-->
   <link th:href="@{/css/detail-styles.css}" rel="stylesheet" />
 </head>
@@ -33,7 +33,7 @@
     <div class="col-lg-8 mx-auto">
       <!-- Create Post Form -->
       <h2>Create New Blog Post</h2>
-      <form th:action="@{/post/post}" method="post" enctype="multipart/form-data">
+      <form th:action="@{/post/post}" method="post" enctype="multipart/form-data" id="postForm">
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
           <input type="text" class="form-control" id="title" name="title" placeholder="Enter the title" required>
@@ -67,6 +67,6 @@
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script th:src="@{/js/detail-scripts.js}"></script>
+<script th:src="@{/js/create-scripts.js}"></script>
 </body>
 </html>

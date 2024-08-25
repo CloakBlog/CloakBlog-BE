@@ -1,7 +1,6 @@
 package com.diev.blog.controller;
 
-import com.diev.blog.domain.Categories;
-import com.diev.blog.domain.Post;
+import com.diev.blog.domain.*;
 import com.diev.blog.dto.PostDto;
 import com.diev.blog.service.PostService;
 import jakarta.servlet.ServletContext;
@@ -56,7 +55,9 @@ public class PostController {
     }
 
     @GetMapping("/category/{name}")
-    public String getPostsByCategory(@PathVariable("name") String name, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
+    public String getPostsByCategory(@PathVariable("name") String name,
+                                     @RequestParam(value = "page", defaultValue = "0") int page,
+                                     Model model) {
         Pageable pageable = PageRequest.of(page, 5); // 페이지 크기는 5로 설정
         Page<Post> postsPage = postService.findByCategoryName(name, pageable);
 
@@ -66,7 +67,9 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam("query") String query, @RequestParam(value = "page", defaultValue = "0") int page, Model model) {
+    public String search(@RequestParam("query") String query,
+                         @RequestParam(value = "page", defaultValue = "0") int page,
+                         Model model) {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Post> searchResults = postService.findByTitleContainingOrContextContaining(query, pageable);
         model.addAttribute("posts", searchResults.getContent());
@@ -90,8 +93,33 @@ public class PostController {
         return "/post/post_create";
     }
 
+    // 수정 예정
+
+    @Autowired
+    CategoriesRepository categoriesRepository;
+
     @PostMapping("/post")
-    public String postSave(@ModelAttribute PostDto postDto) throws IOException {
+    public String postSave(
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("img") MultipartFile img,
+            @RequestParam("categoryIds") Set<Integer> categoryIds
+            ) throws IOException {
+
+
+
+//        Member writer = memberRepository.findById(writerId).orElse(null);
+        Set<Categories> categories = categoriesRepository.findByIdIn(categoryIds);
+//
+        PostDto postDto = new PostDto(title, content, img, categories, "test");
+        System.out.println(title);
+        System.out.println(content);
+        System.out.println(img);
+        System.out.println(categoryIds);
+//        @RequestParam("writerId") Long writerId
+//        System.out.println(writerId);
+
+
         MultipartFile multipartFile = postDto.getImg();
 
         // 파일이 비어 있는지 확인
