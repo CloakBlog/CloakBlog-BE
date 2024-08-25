@@ -107,15 +107,10 @@ public class PostController {
             ) throws IOException {
 
 
-
+        // 멤버 관련 회원 가입, 로그인 우선 작업 후 수정 예정
 //        Member writer = memberRepository.findById(writerId).orElse(null);
-        Set<Categories> categories = categoriesRepository.findByIdIn(categoryIds);
 //
-        PostDto postDto = new PostDto(title, content, img, categories, "test");
-        System.out.println(title);
-        System.out.println(content);
-        System.out.println(img);
-        System.out.println(categoryIds);
+        PostDto postDto = new PostDto(title, content, img, categoryIds, 1);
 //        @RequestParam("writerId") Long writerId
 //        System.out.println(writerId);
 

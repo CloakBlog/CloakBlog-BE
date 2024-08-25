@@ -1,7 +1,5 @@
 package com.diev.blog.dto;
 
-import com.diev.blog.domain.Categories;
-import com.diev.blog.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +14,6 @@ public class PostDto {
     private String title;
     private String content;
     private MultipartFile img;
-    private Set<Categories> categoryIds;
-    private String writer;
+    private Set<Integer> categoryIds;
+    private Integer writerId;
 }

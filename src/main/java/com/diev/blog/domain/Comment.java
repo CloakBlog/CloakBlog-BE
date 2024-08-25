@@ -13,7 +13,7 @@ public class Comment {
     private Integer commentId;
 
     @ManyToOne
-    @JoinColumn(name = "writerEmail")
+    @JoinColumn(name = "writer")
     private Member writer;
 
     @ManyToOne

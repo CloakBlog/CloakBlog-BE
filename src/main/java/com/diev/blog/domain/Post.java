@@ -63,7 +63,7 @@ public class Post {
         this.context = postDto.getContent();
         this.img = uniqueFileName;
         this.folderPath = folderPath;
-        this.categories = postDto.getCategoryIds();
+//        this.categories = postDto.getCategoryIds();
     }
 
     public void update(String title, String content, String img, String folderPath, Set<Categories> categories) {
