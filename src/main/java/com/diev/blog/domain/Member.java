@@ -37,7 +37,7 @@ public class Member {
     private Date updatedAt;
 
     @OneToOne(mappedBy = "hostMember")
-    private List<Blog> hostedBlogs;
+    private Blog hostedBlogs;
 
     @OneToMany(mappedBy = "member")
     private Set<BlogMember> memberships;
