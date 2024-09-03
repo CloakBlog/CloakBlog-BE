@@ -67,6 +67,12 @@
   - [초대 코드는 난수로](https://safety.google/intl/ko/authentication/)
   - 프라이빗~
 - 배포
+- ERP
+  - 권한
+    - 통합 관리자(운영자): admin
+    - 블로그 호스팅(블로그 운영자): Manager
+    - 블로그 멤버(블로그 회원): Member
+  - 회원 일시정지 등 관리
 
 ## 고민
 - 블로그 생성 관련
@@ -84,8 +90,25 @@
  
 
 ## 프로젝트 대면 회의
-- 일정 02/03 (화)
+- 일정 09/03 (화)
 - 프로젝트 현황 브리핑
+- Monolithic Architecture vs Micro Service Architecture
+- Convention
+  - [Java](https://github.com/JunHoPark93/google-java-styleguide)
+    - Google Java Style Guide
+    - Oracle의 경우 마지막 업데이트가 99년도로, 현 자바 버전과의 스타일이 맞지 않을것 같은 이유로 구글 선택
+  - [GitHub Commit](https://overcome-the-limits.tistory.com/entry/%ED%98%91%EC%97%85-%ED%98%91%EC%97%85%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-git-%EC%BB%A4%EB%B0%8B%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
+  - GitHub Branch
+    - GitHub Projects -> Kanban Board -> Issues <br> 
+    (feature/{Issues number}login)
+- Database
+  - MySQL vs PostgreSQL
+- 프로젝트 시작
+  - 기능 재정의
+  - 작업 우선 순위 정하기
+  - 작업 별 기간 정하기
+    - 전체 기간은 유지보수 꾸준히
+    - 기능 구현은 명확한 기간 정하기
 - 기능 추가 여부 검토
   - 기존 기능 외 추가 기능 여부
 - 프론트 기술 스택
@@ -93,11 +116,3 @@
     - React
     - Angular
     - Vue
-- Monolithic Architecture vs Micro Service Architecture
-- Convention
-- 프로젝트 시작
-  - 기능 재정의
-  - 작업 우선 순위 정하기
-  - 작업 별 기간 정하기
-    - 전체 기간은 유지보수 꾸준히
-    - 기능 구현은 명확한 기간 정하기
