@@ -19,14 +19,17 @@
     - 최소한의 HTTP endpoint
   - 기술적으로 특이사항이 없다면 버전은 바꾸지 않을 예정
 
+
 ## 기술스택
 - Java: openjdk 17.0.12 LTS
 - Spring Boot 3.3.2
 - JPA
-- H2 (임시방편)
+- H2 (임시방편) -> MySQL 8.0
 - thymeleaf
 
+
 ## [ERD](https://www.erdcloud.com/d/dRg8giLK3qJa8h3Rf)
+- [TeamERD](https://www.erdcloud.com/d/GdyDxZwzpExuM5nQB)
 - Member
   - 회원 정보 테이블
 - Blog
@@ -44,7 +47,9 @@
 - Comment
   - 게시글의 댓글 정보
 
+
 ## 과제
+- 기존 템플릿 코드 전부 제거, Controller -> RestController 변경
 - 추가 기능 정의
   - ToDo List
   - 회원 관련
@@ -69,10 +74,11 @@
 - 배포
 - ERP
   - 권한
-    - 통합 관리자(운영자): admin
+    - 통합 관리자(운영자): Admin
     - 블로그 호스팅(블로그 운영자): Manager
     - 블로그 멤버(블로그 회원): Member
   - 회원 일시정지 등 관리
+
 
 ## 고민
 - 블로그 생성 관련
@@ -81,6 +87,7 @@
     - 블로그 자체가 프라이빗하기 때문에 로그인이 필수. 따라서 로그인한 사용자 기준 블로그 명을 주입
       (예시: 로그인 후 블로그 접근("/blog/" + user.blogName), 포스트 접근("/blog/" + user.blogName + "/post/"))
       `예시 케이스 : velog`
+  - A 블로그 멤버는 A 블로그 글만 확인 가능, B 블로그 멤버는 A 블로그 글을 보지못함. (어떻게 구현할 것인지)
   - 초대 코드의 경우 블로그명을 해싱해야 될지 고민..
     - 이유는 블로그 명으로 할 경우, 누구나 블로그 멤버로 가입이 가능하여 프라이빗하지 못함
   - 위 문제를 해결하며, 필요에 따라 DB Migration
@@ -100,10 +107,15 @@
   - [GitHub Commit](https://overcome-the-limits.tistory.com/entry/%ED%98%91%EC%97%85-%ED%98%91%EC%97%85%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-git-%EC%BB%A4%EB%B0%8B%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
   - GitHub Branch
     - GitHub Projects -> Kanban Board -> Issues <br> 
-    (feature/{Issues number}login)
+    (feature/{Issues number}_login)
 - Database
-  - MySQL vs PostgreSQL
+  - MySQL 8.0
+- Build
+  - gradle
+- Test code (TDD)
+  - 기능 작업전에 기능 관련 TDD 작성
 - 프로젝트 시작
+  - 시작 일시 : 09/30 (월)
   - 기능 재정의
   - 작업 우선 순위 정하기
   - 작업 별 기간 정하기
