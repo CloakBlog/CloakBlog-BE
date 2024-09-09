@@ -22,9 +22,10 @@
 
 ## 기술스택
 - Java: openjdk 17.0.12 LTS
-- Spring Boot 3.3.2
+- Spring Boot: 3.3.2
 - JPA
-- H2 (임시방편) -> MySQL 8.0
+- H2 (임시방편) -> PostgreSQL 13 ~ 15
+  - JDBC: 42.4.2 (필요할 경우)
 - thymeleaf
 
 
@@ -60,8 +61,9 @@
   - Map API
   - Image, Video
     - 이미지 관련
+      - 이미지 저장 방식
       - 단일 파일이 아닌 다수 파일 저장
-        - 다수의 이미지일 경우 대표 이미지 선정
+      - 다수의 이미지일 경우 대표 이미지 선정
   - 게시판 관련
     - 카테고리 테이블에 값이 없을 경우 에러 발생. 유연한 처리 필요
   - Content Write Editor
@@ -94,37 +96,4 @@
 - 게시글 생성 관련
   - 카테고리 여부에 따라 에러 발생
   - 카테고리의 경우, 기존에 생성된 카테고리가 없을 경우 카테고리 생성을 우선으로 처리
- 
 
-## 프로젝트 대면 회의
-- 일정 09/03 (화)
-- 프로젝트 현황 브리핑
-- Monolithic Architecture vs Micro Service Architecture
-- Convention
-  - [Java](https://github.com/JunHoPark93/google-java-styleguide)
-    - Google Java Style Guide
-    - Oracle의 경우 마지막 업데이트가 99년도로, 현 자바 버전과의 스타일이 맞지 않을것 같은 이유로 구글 선택
-  - [GitHub Commit](https://overcome-the-limits.tistory.com/entry/%ED%98%91%EC%97%85-%ED%98%91%EC%97%85%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-git-%EC%BB%A4%EB%B0%8B%EC%BB%A8%EB%B2%A4%EC%85%98-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
-  - GitHub Branch
-    - GitHub Projects -> Kanban Board -> Issues <br> 
-    (feature/{Issues number}_login)
-- Database
-  - MySQL 8.0
-- Build
-  - gradle
-- Test code (TDD)
-  - 기능 작업전에 기능 관련 TDD 작성
-- 프로젝트 시작
-  - 시작 일시 : 09/30 (월)
-  - 기능 재정의
-  - 작업 우선 순위 정하기
-  - 작업 별 기간 정하기
-    - 전체 기간은 유지보수 꾸준히
-    - 기능 구현은 명확한 기간 정하기
-- 기능 추가 여부 검토
-  - 기존 기능 외 추가 기능 여부
-- 프론트 기술 스택
-  - TypeScript
-    - React
-    - Angular
-    - Vue
