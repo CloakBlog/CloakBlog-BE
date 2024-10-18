@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -43,7 +42,7 @@ public class PostServiceImpl implements PostService {
     // Read - Detail
     @Override
     public Post getById(Long id) {
-        return postRepository.getById(id);
+        return postRepository.getReferenceById(id);
     }
 
     // Update
