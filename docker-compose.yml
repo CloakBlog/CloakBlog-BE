@@ -10,10 +10,29 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: postgresadmin
       POSTGRES_DB: cloakblog
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data  # 로컬 디렉토리와 컨테이너의 데이터 디렉토리 연결
+      - ./postgres-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"  # 로컬 포트 5432와 컨테이너 포트 매핑
+      - "5432:5432"
+    networks:
+      - postgres-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring_app
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/cloakblog
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: postgresadmin
+    depends_on:
+      - db
     networks:
       - postgres-network
 

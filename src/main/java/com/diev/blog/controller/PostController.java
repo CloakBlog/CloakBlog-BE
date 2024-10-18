@@ -51,7 +51,7 @@ public class PostController {
         model.addAttribute("posts", postPage.getContent());
         model.addAttribute("totalPages", postPage.getTotalPages());
         model.addAttribute("currentPage", page);
-        return "/post/home";
+        return "post/home";
     }
 
     @GetMapping("/category/{name}")
@@ -63,7 +63,7 @@ public class PostController {
 
         model.addAttribute("posts", postsPage);
         model.addAttribute("category", name);
-        return "/post/home";
+        return "post/home";
     }
 
     @GetMapping("/search")
@@ -76,21 +76,21 @@ public class PostController {
         model.addAttribute("totalPages", searchResults.getTotalPages());
         model.addAttribute("currentPage", page);
         model.addAttribute("query", query);
-        return "/post/home";
+        return "post/home";
     }
 
     @GetMapping("/post/{id}")
     public String findAllPosts(@PathVariable("id") Long id, Model model) {
         Post post = postService.getById(id);
         model.addAttribute("post", post);
-        return "/post/post_detail";
+        return "post/post_detail";
     }
 
     @GetMapping("/post")
     public String postWrite(Model model) {
         List<Categories> categories = postService.findAllCategories();
         model.addAttribute("categories", categories);
-        return "/post/post_create";
+        return "post/post_create";
     }
 
     // 수정 예정
@@ -122,7 +122,7 @@ public class PostController {
             // 파일이 첨부되지 않은 경우의 처리
             // 예를 들어, 기본 이미지를 설정하거나 파일 업로드 없이 저장할 수 있습니다.
             Post post = postService.save(postDto, null, null);
-            return "redirect:/post/post/" + post.getId();
+            return "redirect:post/post/" + post.getId();
         }
 
         String basePath = "/Users/minseongcheol/Documents/dev/diev/blog/src/main/resources/uploads";
@@ -144,7 +144,7 @@ public class PostController {
         }
 
         Post post = postService.save(postDto, uniqueFileName, folderPath);
-        return "redirect:/post/post/" + post.getId();
+        return "redirect:post/post/" + post.getId();
     }
 
 
