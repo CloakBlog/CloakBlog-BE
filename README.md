@@ -2,10 +2,8 @@
 
 ## 개발환경
 
-- 첫 시작 or 수정 후 시작
-```bash
-docker compose up -d --build --no-cache
-```
+- 불필요 파일 제거로 실행 불가.
+- 작업 후 재작성 예정
 
 
 ## 프로젝트 개요
