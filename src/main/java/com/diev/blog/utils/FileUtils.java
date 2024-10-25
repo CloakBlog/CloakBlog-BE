@@ -2,7 +2,6 @@ package com.diev.blog.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.UUID;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.web.multipart.MultipartFile;
