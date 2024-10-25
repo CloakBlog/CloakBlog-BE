@@ -1,7 +1,6 @@
 package com.diev.blog.controller;
 
 import com.diev.blog.domain.*;
-import com.diev.blog.dto.PostDto;
 import com.diev.blog.service.PostService;
 import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,23 +12,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Set;
 
-import com.diev.blog.utils.FileUtils;
-
-//@RestController
-@Controller
+@RestController
 @RequestMapping("/post")
 public class PostController {
 
